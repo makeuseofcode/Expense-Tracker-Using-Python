@@ -149,12 +149,14 @@ class ExpenseTrackerApp(tk.Tk):
     def update_total_label(self):
         total_expenses = sum(float(expense[0]) for expense in self.expenses)
         self.total_label.config(text=f"Total Expenses: USD {total_expenses:.2f}")
-
+        
     def save_expenses(self):
         with open("expenses.csv", "w", newline="") as csvfile:
             writer = csv.writer(csvfile)
-            for expense, item, category, date in self.expenses:
-                writer.writerow([expense, item, category, date])
+            column_headers = ["Expense Amount", "Item Description", "Category", "Date"]
+            writer.writerow(column_headers)
+            for expense in self.expenses:
+                writer.writerow(expense)
 
     def show_expenses_chart(self):
         category_totals = {}
@@ -176,4 +178,4 @@ class ExpenseTrackerApp(tk.Tk):
 
 if __name__ == "__main__":
     app = ExpenseTrackerApp()
-    app.mainloop()
+    app.mainloop()  
